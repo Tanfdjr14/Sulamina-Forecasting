@@ -44,10 +44,46 @@
     color: var(--on-surf);
 }
 
-/* Sembunyikan elemen bawaan Streamlit untuk tampilan clean */
+/* Sembunyikan menu bawaan & footer, tapi TAMPILKAN Tombol Burger Sidebar (☰) */
 #MainMenu { visibility: hidden; }
 footer { visibility: hidden; }
-header { visibility: hidden; }
+header[data-testid="stHeader"] {
+    background: transparent !important;
+    z-index: 99990 !important;
+    height: 0 !important;
+}
+
+/* Tombol Burger ☰ (Sidebar Toggle) — Prominen di Seluler & Desktop */
+[data-testid="collapsedControl"] {
+    visibility: visible !important;
+    display: block !important;
+    z-index: 99999 !important;
+    position: fixed !important;
+    top: 14px !important;
+    left: 14px !important;
+}
+[data-testid="collapsedControl"] button {
+    background: linear-gradient(135deg, #feb300, #ffba38) !important;
+    color: #281900 !important;
+    border: none !important;
+    border-radius: 12px !important;
+    width: 42px !important;
+    height: 42px !important;
+    box-shadow: 0 0 20px rgba(254,179,0,0.4) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.25s ease !important;
+}
+[data-testid="collapsedControl"] button:hover {
+    box-shadow: 0 0 28px rgba(254,179,0,0.6) !important;
+    transform: scale(1.06);
+}
+[data-testid="collapsedControl"] button svg {
+    fill: #281900 !important;
+    width: 22px !important;
+    height: 22px !important;
+}
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
