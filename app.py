@@ -94,10 +94,20 @@ def nav_to(page_name):
 nav_pages = ['Dashboard', 'Analytics', 'Inventory']
 current_page = st.session_state.page
 
-nav_cols = st.columns([2, 6, 3])
+nav_cols = st.columns([2.5, 6, 3])
 
 with nav_cols[0]:
-    st.markdown('<div class="brand-text">🍫 Sulamina</div>', unsafe_allow_html=True)
+    brand_cols = st.columns([1, 3])
+    with brand_cols[0]:
+        if st.button("☰", key="btn_burger", help="Buka Panel Upload File / Sidebar"):
+            st.components.v1.html("""
+                <script>
+                    var btn = window.parent.document.querySelector('[data-testid="collapsedControl"] button');
+                    if (btn) { btn.click(); }
+                </script>
+            """, height=0)
+    with brand_cols[1]:
+        st.markdown('<div class="brand-text">🍫 Sulamina</div>', unsafe_allow_html=True)
 
 with nav_cols[1]:
     btn_cols = st.columns(len(nav_pages))
@@ -124,12 +134,22 @@ st.divider()
 # 6. Sidebar (Data Upload & Notifications)
 # ─────────────────────────────────────────────
 with st.sidebar:
-    st.markdown("""
-    <div class="sidebar-brand-wrapper">
-        <div class="brand-sidebar">Sulamina</div>
-        <div class="brand-subtext">Predictive Analytics</div>
-    </div>
-    """, unsafe_allow_html=True)
+    sb_top_cols = st.columns([3, 1])
+    with sb_top_cols[0]:
+        st.markdown("""
+        <div class="sidebar-brand-wrapper">
+            <div class="brand-sidebar">Sulamina</div>
+            <div class="brand-subtext">Predictive Analytics</div>
+        </div>
+        """, unsafe_allow_html=True)
+    with sb_top_cols[1]:
+        if st.button("✖️", key="btn_close_sidebar", help="Tutup Panel Sidebar"):
+            st.components.v1.html("""
+                <script>
+                    var btn = window.parent.document.querySelector('[data-testid="stSidebarCollapseButton"] button');
+                    if (btn) { btn.click(); }
+                </script>
+            """, height=0)
 
     st.divider()
     st.header("📂 Upload Data")
