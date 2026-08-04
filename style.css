@@ -1,0 +1,381 @@
+/* ==========================================================================
+   SULAMINA PREDICTIVE CONFECTIONERY — UI/UX MASTER STYLESHEET
+   Sistem Desain & Klasifikasi Komponen Berdasarkan Fungsi dan Fitur
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@600;700;800&display=swap');
+
+/* ==========================================================================
+   1. SYSTEM CONFIG & DESIGN TOKENS
+   ========================================================================== */
+:root {
+    --bg:            #1c1110;
+    --surface:       #1c1110;
+    --surface-lo:    #160b0a;
+    --surface-med:   #291d1b;
+    --surface-hi:    #342726;
+    --surface-top:   #3f3130;
+    --primary:       #e3beb8;
+    --primary-cont:  #3e2723;
+    --secondary:     #ffd799;
+    --secondary-dim: #ffba38;
+    --secondary-cnt: #feb300;
+    --tertiary:      #e5beb5;
+    --on-bg:         #f4dddb;
+    --on-surf:       #f4dddb;
+    --on-surf-var:   #d3c3c0;
+    --outline:       #9c8d8b;
+    --outline-var:   #504442;
+    --error:         #ffb4ab;
+    --gold-glow:     rgba(254,179,0,0.15);
+}
+
+/* ==========================================================================
+   2. GLOBAL & BASE APPLICATION STYLES
+   ========================================================================== */
+.stApp {
+    background-color: var(--bg) !important;
+    background-image:
+        radial-gradient(ellipse 80% 40% at 50% 0%,
+            rgba(254,179,0,0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 30% at 80% 100%,
+            rgba(227,190,184,0.06) 0%, transparent 60%);
+    font-family: 'Inter', sans-serif;
+    color: var(--on-surf);
+}
+
+/* Sembunyikan elemen bawaan Streamlit untuk tampilan clean */
+#MainMenu { visibility: hidden; }
+footer { visibility: hidden; }
+header { visibility: hidden; }
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--surface-lo); }
+::-webkit-scrollbar-thumb {
+    background: rgba(255,215,153,0.25);
+    border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(255,186,56,0.45); }
+
+/* Buttons & Input Controls */
+.stButton > button {
+    background: linear-gradient(135deg, var(--secondary-cnt), var(--secondary-dim)) !important;
+    color: #281900 !important;
+    border: none !important;
+    border-radius: 9999px !important;
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 10px !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    padding: 6px 16px !important;
+    min-height: unset !important;
+    height: auto !important;
+    box-shadow: 0 0 14px rgba(254,179,0,0.2) !important;
+    transition: all 0.25s ease !important;
+}
+.stButton > button:hover {
+    background: linear-gradient(135deg, var(--secondary-dim), var(--secondary)) !important;
+    box-shadow: 0 0 22px rgba(254,179,0,0.35) !important;
+    transform: translateY(-1px);
+}
+
+/* Dataframe & Metric Cards */
+[data-testid="stMetricValue"] {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 2rem !important;
+    font-weight: 300 !important;
+    color: var(--secondary) !important;
+    letter-spacing: 0.04em !important;
+}
+[data-testid="stMetricLabel"] {
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    color: var(--on-surf-var) !important;
+}
+[data-testid="metric-container"] {
+    background: rgba(62,39,35,0.45) !important;
+    border: 1px solid rgba(255,215,153,0.15) !important;
+    border-radius: 14px !important;
+    padding: 16px 20px !important;
+    backdrop-filter: blur(20px);
+}
+[data-testid="stDataFrame"] {
+    border: 1px solid rgba(255,215,153,0.12) !important;
+    border-radius: 10px !important;
+    overflow: hidden;
+}
+.stDataFrame thead th {
+    background: rgba(62,39,35,0.7) !important;
+    color: var(--secondary) !important;
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 700 !important;
+}
+
+/* ==========================================================================
+   3. SIDEBAR & FILE UPLOADER STYLES
+   ========================================================================== */
+[data-testid="stSidebar"] {
+    background: rgba(22,11,10,0.85) !important;
+    border-right: 1px solid rgba(255,215,153,0.15) !important;
+    backdrop-filter: blur(24px);
+}
+[data-testid="stSidebar"] * {
+    color: var(--on-surf) !important;
+}
+[data-testid="stSidebar"] .stSelectbox label,
+[data-testid="stSidebar"] .stFileUploader label {
+    color: var(--secondary) !important;
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+.sidebar-brand-wrapper {
+    padding: 8px 0 12px;
+}
+.brand-sidebar {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    background: linear-gradient(135deg, #ffd799, #ffba38);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 4px;
+}
+.brand-subtext {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    color: #9c8d8b;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+/* ==========================================================================
+   4. NAVIGATION BAR & BRANDING STYLES
+   ========================================================================== */
+.brand-text {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    background: linear-gradient(135deg, #ffd799, #ffba38);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding: 6px 0;
+}
+
+/* ==========================================================================
+   5. MANDATORY LOGIN FEATURE STYLES
+   ========================================================================== */
+.login-screen-wrapper {
+    max-width: 440px;
+    margin: 40px auto;
+    padding: 36px 32px;
+    background: rgba(41,29,27,0.75);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(255,215,153,0.25);
+    border-radius: 24px;
+    box-shadow: 0 0 40px rgba(254,179,0,0.12);
+    text-align: center;
+}
+.login-header-icon {
+    font-size: 54px;
+    margin-bottom: 12px;
+}
+.login-header-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--secondary);
+    margin-bottom: 6px;
+}
+.login-header-subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: var(--on-surf-var);
+    margin-bottom: 24px;
+    line-height: 1.5;
+}
+.login-demo-box {
+    background: rgba(62,39,35,0.5);
+    border: 1px dashed rgba(255,215,153,0.3);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-top: 20px;
+    font-size: 12px;
+    color: var(--on-surf-var);
+    text-align: left;
+}
+
+/* ==========================================================================
+   6. HERO SECTION COMPONENT STYLES
+   ========================================================================== */
+.hero-wrapper {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto 28px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    padding: 16px 0;
+}
+.hero-content {
+    flex: 1;
+    min-width: 280px;
+}
+.hero-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    background: linear-gradient(135deg, #ffd799, #ffba38);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 14px;
+}
+.hero-description {
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--on-surf-var);
+    max-width: 520px;
+    margin-bottom: 20px;
+}
+.hero-card {
+    flex: 0 0 auto;
+    min-width: 220px;
+    background: rgba(62,39,35,0.4);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(255,215,153,0.2);
+    border-radius: 20px;
+    padding: 24px 28px;
+    box-shadow: 0 0 32px rgba(254,179,0,0.1);
+    text-align: center;
+}
+.hero-card-icon { font-size: 40px; margin-bottom: 8px; }
+.hero-card-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #ffd799;
+    margin-bottom: 6px;
+}
+.hero-card-subtitle { font-size: 12px; color: #9c8d8b; }
+.hero-card-divider { border-color: rgba(255,215,153,0.15); margin: 16px 0; }
+.hero-stat-container { display: flex; justify-content: space-around; gap: 8px; }
+.hero-stat-num { font-weight: 300; font-size: 22px; color: #ffba38; }
+.hero-stat-label { font-size: 10px; color: #9c8d8b; text-transform: uppercase; }
+.hero-stat-line { width: 1px; background: rgba(255,215,153,0.15); }
+
+/* ==========================================================================
+   7. EMPTY STATE FEATURE STYLES
+   ========================================================================== */
+.empty-state-card {
+    max-width: 580px;
+    margin: 24px auto;
+    text-align: center;
+    background: rgba(62,39,35,0.35);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(255,215,153,0.18);
+    border-radius: 20px;
+    padding: 40px 32px;
+    box-shadow: 0 0 32px rgba(254,179,0,0.08);
+}
+.empty-icon { font-size: 52px; margin-bottom: 16px; }
+.empty-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: #ffd799;
+    margin-bottom: 12px;
+}
+.empty-text {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #d3c3c0;
+}
+.empty-highlight { color: #ffba38; }
+.empty-badge-wrapper {
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+.empty-feature-badge {
+    background: rgba(41,29,27,0.6);
+    border: 1px solid rgba(255,215,153,0.15);
+    border-radius: 12px;
+    padding: 14px 18px;
+    text-align: center;
+    min-width: 100px;
+}
+.empty-badge-icon { font-size: 24px; margin-bottom: 6px; }
+.empty-badge-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    color: #9c8d8b;
+    text-transform: uppercase;
+}
+
+/* ==========================================================================
+   8. NOTIFICATION CARD STYLES
+   ========================================================================== */
+.notif-card {
+    background: rgba(62,39,35,0.5);
+    border-left: 3px solid var(--secondary-dim);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+}
+.notif-icon { font-size: 16px; margin-right: 6px; }
+.notif-msg { font-size: 13px; color: #d3c3c0; }
+.notif-time { font-size: 10px; color: #504442; margin-top: 4px; }
+
+/* ==========================================================================
+   9. PAGE TITLES & SUBTITLES
+   ========================================================================== */
+.page-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    background: linear-gradient(135deg, #ffd799, #ffba38);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 2rem;
+    margin-bottom: 8px;
+}
+.page-subtitle {
+    font-size: 14px;
+    color: #9c8d8b;
+    margin-bottom: 24px;
+}
+
+/* ==========================================================================
+   10. FOOTER COMPONENT STYLES
+   ========================================================================== */
+.sulamina-footer {
+    margin-top: 56px;
+    padding: 20px 32px;
+    border-top: 1px solid rgba(80,68,66,0.5);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    background: rgba(22,11,10,0.5);
+    backdrop-filter: blur(12px);
+}
+.footer-links-wrapper { display: flex; flex-wrap: wrap; gap: 16px; }
+.footer-link { font-size: 13px; color: #9c8d8b; }
+.footer-copy { font-size: 12px; color: #504442; }
