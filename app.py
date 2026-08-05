@@ -1,5 +1,5 @@
 import streamlit as st
-from database import verify_user
+from database import verify_user, register_user
 from model import train_sarima, forecast_sarima, evaluate_model, generate_recommendation
 from utils import (
     load_data, prepare_timeseries, plot_data, plot_forecast,
@@ -42,7 +42,7 @@ if 'forecast_steps' not in st.session_state:
 
 
 # ─────────────────────────────────────────────
-# 4. Mandatory Login Gate (NoSQL Auth)
+# 4. Mandatory Login & Sign Up Gate (NoSQL Auth)
 # ─────────────────────────────────────────────
 if not st.session_state.logged_in:
     st.markdown("""
@@ -50,30 +50,54 @@ if not st.session_state.logged_in:
         <div class="login-header-icon">🍫</div>
         <div class="login-header-title">Sulamina Predictive Confectionery</div>
         <div class="login-header-subtitle">
-            Akses dibatasi. Silakan login menggunakan akun terdaftar untuk melanjutkan ke platform analitik.
+            Akses dibatasi. Silakan login atau daftarkan Akun Google resmi Anda untuk melanjutkan ke platform analitik.
         </div>
     </div>
     """, unsafe_allow_html=True)
 
-    col1, col2, col3 = st.columns([1, 2, 1])
+    col1, col2, col3 = st.columns([1, 2.2, 1])
     with col2:
-        with st.form("login_form"):
-            email_input = st.text_input("📧 Email", placeholder="Masukkan email terdaftar...")
-            password_input = st.text_input("🔒 Password", type="password", placeholder="Masukkan password...")
-            submit_login = st.form_submit_button("🚀 LOGIN SEKARANG", use_container_width=True)
+        tab_login, tab_signup = st.tabs(["🔑 LOGIN AKUN", "📝 DAFTAR AKUN BARU"])
 
-            if submit_login:
-                if not email_input or not password_input:
-                    st.error("⚠️ Email dan password harus diisi!")
-                else:
-                    if verify_user(email_input, password_input):
-                        st.session_state.logged_in = True
-                        st.session_state.username = email_input.strip().lower()
-                        st.success("✅ Login berhasil! Mengalihkan...")
-                        st.rerun()
+        with tab_login:
+            with st.form("login_form"):
+                email_input = st.text_input("📧 Email Google", placeholder="nama@gmail.com")
+                password_input = st.text_input("🔒 Password", type="password", placeholder="Masukkan password...")
+                submit_login = st.form_submit_button("🚀 LOGIN SEKARANG", use_container_width=True)
+
+                if submit_login:
+                    if not email_input or not password_input:
+                        st.error("⚠️ Email dan password harus diisi!")
                     else:
-                        st.error("❌ Email atau password salah! Silakan coba lagi.")
-        st.stop()
+                        if verify_user(email_input, password_input):
+                            st.session_state.logged_in = True
+                            st.session_state.username = email_input.strip().lower()
+                            st.success("✅ Login berhasil! Mengalihkan...")
+                            st.rerun()
+                        else:
+                            st.error("❌ Email atau password salah! Silakan coba lagi.")
+
+        with tab_signup:
+            with st.form("signup_form"):
+                st.caption("🌐 Hanya menerima Akun Google resmi (@gmail.com)")
+                new_email = st.text_input("📧 Email Google Resmi", placeholder="contoh: akun@gmail.com")
+                new_password = st.text_input("🔒 Buat Password", type="password", placeholder="Minimal 6 karakter...")
+                confirm_password = st.text_input("🔒 Konfirmasi Password", type="password", placeholder="Ulangi password...")
+                submit_signup = st.form_submit_button("✨ DAFTAR AKUN GOOGLE", use_container_width=True)
+
+                if submit_signup:
+                    if not new_email or not new_password or not confirm_password:
+                        st.error("⚠️ Semua kolom pendaftaran harus diisi!")
+                    elif new_password != confirm_password:
+                        st.error("⚠️ Password dan Konfirmasi Password tidak cocok!")
+                    else:
+                        success, msg = register_user(new_email, new_password)
+                        if success:
+                            st.success(f"✅ {msg}")
+                        else:
+                            st.error(f"❌ {msg}")
+
+    st.stop()
 
 
 # ─────────────────────────────────────────────
