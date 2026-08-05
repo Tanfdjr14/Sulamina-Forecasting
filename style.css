@@ -9,25 +9,25 @@
    1. SYSTEM CONFIG & DESIGN TOKENS
    ========================================================================== */
 :root {
-    --bg:            #1c1110;
-    --surface:       #1c1110;
-    --surface-lo:    #160b0a;
-    --surface-med:   #291d1b;
-    --surface-hi:    #342726;
-    --surface-top:   #3f3130;
-    --primary:       #e3beb8;
-    --primary-cont:  #3e2723;
-    --secondary:     #ffd799;
+    --bg: #1c1110;
+    --surface: #1c1110;
+    --surface-lo: #160b0a;
+    --surface-med: #291d1b;
+    --surface-hi: #342726;
+    --surface-top: #3f3130;
+    --primary: #e3beb8;
+    --primary-cont: #3e2723;
+    --secondary: #ffd799;
     --secondary-dim: #ffba38;
     --secondary-cnt: #feb300;
-    --tertiary:      #e5beb5;
-    --on-bg:         #f4dddb;
-    --on-surf:       #f4dddb;
-    --on-surf-var:   #d3c3c0;
-    --outline:       #9c8d8b;
-    --outline-var:   #504442;
-    --error:         #ffb4ab;
-    --gold-glow:     rgba(254,179,0,0.15);
+    --tertiary: #e5beb5;
+    --on-bg: #f4dddb;
+    --on-surf: #f4dddb;
+    --on-surf-var: #d3c3c0;
+    --outline: #9c8d8b;
+    --outline-var: #504442;
+    --error: #ffb4ab;
+    --gold-glow: rgba(254, 179, 0, 0.15);
 }
 
 /* ==========================================================================
@@ -37,31 +37,42 @@
     background-color: var(--bg) !important;
     background-image:
         radial-gradient(ellipse 80% 40% at 50% 0%,
-            rgba(254,179,0,0.08) 0%, transparent 70%),
+            rgba(254, 179, 0, 0.08) 0%, transparent 70%),
         radial-gradient(ellipse 60% 30% at 80% 100%,
-            rgba(227,190,184,0.06) 0%, transparent 60%);
+            rgba(227, 190, 184, 0.06) 0%, transparent 60%);
     font-family: 'Inter', sans-serif;
     color: var(--on-surf);
 }
 
-/* Sembunyikan HANYA Icon GitHub & Menu Kanan Atas (TIDAK menyembunyikan Tombol Sidebar) */
+/* ==========================================================================
+   SEMBUNYIKAN TOOLBAR DEFAULT STREAMLIT CLOUD, GITHUB & BADGE "MANAGE APP"
+   ========================================================================== */
+header[data-testid="stHeader"],
+[data-testid="stHeader"],
+[data-testid="stAppToolbar"],
+.stAppToolbar,
 button[title*="View app source"],
 button[title*="source"],
 a[href*="github"],
-[data-testid="stAppToolbar"] button,
-[data-testid="stAppToolbar"] a,
+[data-testid="stAppDeployButton"],
+[data-testid="manage-app-button"],
+div[class*="viewerBadge"],
+div[class*="manageApp"],
+.viewerBadge_container__1t54K,
+.viewerBadge_link__1S137,
 #MainMenu,
 footer {
     display: none !important;
     visibility: hidden !important;
     opacity: 0 !important;
     pointer-events: none !important;
+    height: 0 !important;
+    width: 0 !important;
 }
 
 header[data-testid="stHeader"] {
     background: transparent !important;
-    z-index: 99990 !important;
-    pointer-events: none !important;
+    z-index: -1 !important;
 }
 
 /* Tombol Anak Panah Sidebar (Collapsed Control) — SELALU TAMPIL PROMINEN */
@@ -77,13 +88,13 @@ header[data-testid="stHeader"] {
 }
 
 [data-testid="collapsedControl"] button {
-    background: rgba(62,39,35,0.9) !important;
+    background: rgba(62, 39, 35, 0.9) !important;
     color: var(--secondary) !important;
-    border: 1px solid rgba(255,215,153,0.4) !important;
+    border: 1px solid rgba(255, 215, 153, 0.4) !important;
     border-radius: 12px !important;
     width: 40px !important;
     height: 40px !important;
-    box-shadow: 0 0 18px rgba(254,179,0,0.3) !important;
+    box-shadow: 0 0 18px rgba(254, 179, 0, 0.3) !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -91,23 +102,33 @@ header[data-testid="stHeader"] {
 }
 
 [data-testid="collapsedControl"] button:hover {
-    background: rgba(62,39,35,1) !important;
+    background: rgba(62, 39, 35, 1) !important;
     border-color: var(--secondary-dim) !important;
-    box-shadow: 0 0 24px rgba(254,179,0,0.5) !important;
+    box-shadow: 0 0 24px rgba(254, 179, 0, 0.5) !important;
     transform: scale(1.06);
 }
 
 /* Custom Scrollbar */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: var(--surface-lo); }
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--surface-lo);
+}
+
 ::-webkit-scrollbar-thumb {
-    background: rgba(255,215,153,0.25);
+    background: rgba(255, 215, 153, 0.25);
     border-radius: 9999px;
 }
-::-webkit-scrollbar-thumb:hover { background: rgba(255,186,56,0.45); }
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 186, 56, 0.45);
+}
 
 /* Buttons & Input Controls */
-.stButton > button {
+.stButton>button {
     background: linear-gradient(135deg, var(--secondary-cnt), var(--secondary-dim)) !important;
     color: #281900 !important;
     border: none !important;
@@ -120,12 +141,13 @@ header[data-testid="stHeader"] {
     padding: 6px 16px !important;
     min-height: unset !important;
     height: auto !important;
-    box-shadow: 0 0 14px rgba(254,179,0,0.2) !important;
+    box-shadow: 0 0 14px rgba(254, 179, 0, 0.2) !important;
     transition: all 0.25s ease !important;
 }
-.stButton > button:hover {
+
+.stButton>button:hover {
     background: linear-gradient(135deg, var(--secondary-dim), var(--secondary)) !important;
-    box-shadow: 0 0 22px rgba(254,179,0,0.35) !important;
+    box-shadow: 0 0 22px rgba(254, 179, 0, 0.35) !important;
     transform: translateY(-1px);
 }
 
@@ -137,6 +159,7 @@ header[data-testid="stHeader"] {
     color: var(--secondary) !important;
     letter-spacing: 0.04em !important;
 }
+
 [data-testid="stMetricLabel"] {
     font-family: 'Montserrat', sans-serif !important;
     font-size: 11px !important;
@@ -145,20 +168,23 @@ header[data-testid="stHeader"] {
     text-transform: uppercase !important;
     color: var(--on-surf-var) !important;
 }
+
 [data-testid="metric-container"] {
-    background: rgba(62,39,35,0.45) !important;
-    border: 1px solid rgba(255,215,153,0.15) !important;
+    background: rgba(62, 39, 35, 0.45) !important;
+    border: 1px solid rgba(255, 215, 153, 0.15) !important;
     border-radius: 14px !important;
     padding: 16px 20px !important;
     backdrop-filter: blur(20px);
 }
+
 [data-testid="stDataFrame"] {
-    border: 1px solid rgba(255,215,153,0.12) !important;
+    border: 1px solid rgba(255, 215, 153, 0.12) !important;
     border-radius: 10px !important;
     overflow: hidden;
 }
+
 .stDataFrame thead th {
-    background: rgba(62,39,35,0.7) !important;
+    background: rgba(62, 39, 35, 0.7) !important;
     color: var(--secondary) !important;
     font-family: 'Montserrat', sans-serif !important;
     font-weight: 700 !important;
@@ -168,13 +194,15 @@ header[data-testid="stHeader"] {
    3. SIDEBAR & FILE UPLOADER STYLES
    ========================================================================== */
 [data-testid="stSidebar"] {
-    background: rgba(22,11,10,0.85) !important;
-    border-right: 1px solid rgba(255,215,153,0.15) !important;
+    background: rgba(22, 11, 10, 0.85) !important;
+    border-right: 1px solid rgba(255, 215, 153, 0.15) !important;
     backdrop-filter: blur(24px);
 }
+
 [data-testid="stSidebar"] * {
     color: var(--on-surf) !important;
 }
+
 [data-testid="stSidebar"] .stSelectbox label,
 [data-testid="stSidebar"] .stFileUploader label {
     color: var(--secondary) !important;
@@ -184,9 +212,11 @@ header[data-testid="stHeader"] {
     letter-spacing: 0.08em;
     text-transform: uppercase;
 }
+
 .sidebar-brand-wrapper {
     padding: 8px 0 12px;
 }
+
 .brand-sidebar {
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
@@ -196,6 +226,7 @@ header[data-testid="stHeader"] {
     -webkit-text-fill-color: transparent;
     margin-bottom: 4px;
 }
+
 .brand-subtext {
     font-family: 'Inter', sans-serif;
     font-size: 11px;
@@ -224,17 +255,19 @@ header[data-testid="stHeader"] {
     max-width: 440px;
     margin: 40px auto;
     padding: 36px 32px;
-    background: rgba(41,29,27,0.75);
+    background: rgba(41, 29, 27, 0.75);
     backdrop-filter: blur(24px);
-    border: 1px solid rgba(255,215,153,0.25);
+    border: 1px solid rgba(255, 215, 153, 0.25);
     border-radius: 24px;
-    box-shadow: 0 0 40px rgba(254,179,0,0.12);
+    box-shadow: 0 0 40px rgba(254, 179, 0, 0.12);
     text-align: center;
 }
+
 .login-header-icon {
     font-size: 54px;
     margin-bottom: 12px;
 }
+
 .login-header-title {
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
@@ -242,6 +275,7 @@ header[data-testid="stHeader"] {
     color: var(--secondary);
     margin-bottom: 6px;
 }
+
 .login-header-subtitle {
     font-family: 'Inter', sans-serif;
     font-size: 13px;
@@ -249,9 +283,10 @@ header[data-testid="stHeader"] {
     margin-bottom: 24px;
     line-height: 1.5;
 }
+
 .login-demo-box {
-    background: rgba(62,39,35,0.5);
-    border: 1px dashed rgba(255,215,153,0.3);
+    background: rgba(62, 39, 35, 0.5);
+    border: 1px dashed rgba(255, 215, 153, 0.3);
     border-radius: 12px;
     padding: 12px 16px;
     margin-top: 20px;
@@ -274,10 +309,12 @@ header[data-testid="stHeader"] {
     gap: 32px;
     padding: 16px 0;
 }
+
 .hero-content {
     flex: 1;
     min-width: 280px;
 }
+
 .hero-title {
     font-family: 'Montserrat', sans-serif;
     font-size: clamp(1.8rem, 4vw, 2.8rem);
@@ -289,6 +326,7 @@ header[data-testid="stHeader"] {
     -webkit-text-fill-color: transparent;
     margin-bottom: 14px;
 }
+
 .hero-description {
     font-family: 'Inter', sans-serif;
     font-size: 15px;
@@ -297,18 +335,24 @@ header[data-testid="stHeader"] {
     max-width: 520px;
     margin-bottom: 20px;
 }
+
 .hero-card {
     flex: 0 0 auto;
     min-width: 220px;
-    background: rgba(62,39,35,0.4);
+    background: rgba(62, 39, 35, 0.4);
     backdrop-filter: blur(24px);
-    border: 1px solid rgba(255,215,153,0.2);
+    border: 1px solid rgba(255, 215, 153, 0.2);
     border-radius: 20px;
     padding: 24px 28px;
-    box-shadow: 0 0 32px rgba(254,179,0,0.1);
+    box-shadow: 0 0 32px rgba(254, 179, 0, 0.1);
     text-align: center;
 }
-.hero-card-icon { font-size: 40px; margin-bottom: 8px; }
+
+.hero-card-icon {
+    font-size: 40px;
+    margin-bottom: 8px;
+}
+
 .hero-card-title {
     font-family: 'Montserrat', sans-serif;
     font-size: 13px;
@@ -318,12 +362,39 @@ header[data-testid="stHeader"] {
     color: #ffd799;
     margin-bottom: 6px;
 }
-.hero-card-subtitle { font-size: 12px; color: #9c8d8b; }
-.hero-card-divider { border-color: rgba(255,215,153,0.15); margin: 16px 0; }
-.hero-stat-container { display: flex; justify-content: space-around; gap: 8px; }
-.hero-stat-num { font-weight: 300; font-size: 22px; color: #ffba38; }
-.hero-stat-label { font-size: 10px; color: #9c8d8b; text-transform: uppercase; }
-.hero-stat-line { width: 1px; background: rgba(255,215,153,0.15); }
+
+.hero-card-subtitle {
+    font-size: 12px;
+    color: #9c8d8b;
+}
+
+.hero-card-divider {
+    border-color: rgba(255, 215, 153, 0.15);
+    margin: 16px 0;
+}
+
+.hero-stat-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 8px;
+}
+
+.hero-stat-num {
+    font-weight: 300;
+    font-size: 22px;
+    color: #ffba38;
+}
+
+.hero-stat-label {
+    font-size: 10px;
+    color: #9c8d8b;
+    text-transform: uppercase;
+}
+
+.hero-stat-line {
+    width: 1px;
+    background: rgba(255, 215, 153, 0.15);
+}
 
 /* ==========================================================================
    7. EMPTY STATE FEATURE STYLES
@@ -332,14 +403,19 @@ header[data-testid="stHeader"] {
     max-width: 580px;
     margin: 24px auto;
     text-align: center;
-    background: rgba(62,39,35,0.35);
+    background: rgba(62, 39, 35, 0.35);
     backdrop-filter: blur(24px);
-    border: 1px solid rgba(255,215,153,0.18);
+    border: 1px solid rgba(255, 215, 153, 0.18);
     border-radius: 20px;
     padding: 40px 32px;
-    box-shadow: 0 0 32px rgba(254,179,0,0.08);
+    box-shadow: 0 0 32px rgba(254, 179, 0, 0.08);
 }
-.empty-icon { font-size: 52px; margin-bottom: 16px; }
+
+.empty-icon {
+    font-size: 52px;
+    margin-bottom: 16px;
+}
+
 .empty-title {
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
@@ -347,12 +423,17 @@ header[data-testid="stHeader"] {
     color: #ffd799;
     margin-bottom: 12px;
 }
+
 .empty-text {
     font-size: 14px;
     line-height: 1.6;
     color: #d3c3c0;
 }
-.empty-highlight { color: #ffba38; }
+
+.empty-highlight {
+    color: #ffba38;
+}
+
 .empty-badge-wrapper {
     margin-top: 24px;
     display: flex;
@@ -360,15 +441,21 @@ header[data-testid="stHeader"] {
     gap: 16px;
     flex-wrap: wrap;
 }
+
 .empty-feature-badge {
-    background: rgba(41,29,27,0.6);
-    border: 1px solid rgba(255,215,153,0.15);
+    background: rgba(41, 29, 27, 0.6);
+    border: 1px solid rgba(255, 215, 153, 0.15);
     border-radius: 12px;
     padding: 14px 18px;
     text-align: center;
     min-width: 100px;
 }
-.empty-badge-icon { font-size: 24px; margin-bottom: 6px; }
+
+.empty-badge-icon {
+    font-size: 24px;
+    margin-bottom: 6px;
+}
+
 .empty-badge-label {
     font-family: 'Montserrat', sans-serif;
     font-size: 10px;
@@ -381,15 +468,28 @@ header[data-testid="stHeader"] {
    8. NOTIFICATION CARD STYLES
    ========================================================================== */
 .notif-card {
-    background: rgba(62,39,35,0.5);
+    background: rgba(62, 39, 35, 0.5);
     border-left: 3px solid var(--secondary-dim);
     border-radius: 8px;
     padding: 10px 14px;
     margin-bottom: 8px;
 }
-.notif-icon { font-size: 16px; margin-right: 6px; }
-.notif-msg { font-size: 13px; color: #d3c3c0; }
-.notif-time { font-size: 10px; color: #504442; margin-top: 4px; }
+
+.notif-icon {
+    font-size: 16px;
+    margin-right: 6px;
+}
+
+.notif-msg {
+    font-size: 13px;
+    color: #d3c3c0;
+}
+
+.notif-time {
+    font-size: 10px;
+    color: #504442;
+    margin-top: 4px;
+}
 
 /* ==========================================================================
    9. PAGE TITLES & SUBTITLES
@@ -403,6 +503,7 @@ header[data-testid="stHeader"] {
     font-size: 2rem;
     margin-bottom: 8px;
 }
+
 .page-subtitle {
     font-size: 14px;
     color: #9c8d8b;
@@ -415,15 +516,28 @@ header[data-testid="stHeader"] {
 .sulamina-footer {
     margin-top: 56px;
     padding: 20px 32px;
-    border-top: 1px solid rgba(80,68,66,0.5);
+    border-top: 1px solid rgba(80, 68, 66, 0.5);
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     gap: 12px;
-    background: rgba(22,11,10,0.5);
+    background: rgba(22, 11, 10, 0.5);
     backdrop-filter: blur(12px);
 }
-.footer-links-wrapper { display: flex; flex-wrap: wrap; gap: 16px; }
-.footer-link { font-size: 13px; color: #9c8d8b; }
-.footer-copy { font-size: 12px; color: #504442; }
+
+.footer-links-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.footer-link {
+    font-size: 13px;
+    color: #9c8d8b;
+}
+
+.footer-copy {
+    font-size: 12px;
+    color: #504442;
+}
