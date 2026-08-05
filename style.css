@@ -44,16 +44,16 @@
     color: var(--on-surf);
 }
 
-/* Sembunyikan Toolbar Streamlit Cloud (Icon GitHub & Menu Kanan Atas) */
-[data-testid="stAppToolbar"],
-.stAppToolbar,
-button[title="View app source"],
+/* Sembunyikan HANYA Icon GitHub & Menu Kanan Atas (TIDAK menyembunyikan Tombol Sidebar) */
+button[title*="View app source"],
+button[title*="source"],
+a[href*="github"],
+[data-testid="stAppToolbar"] button,
+[data-testid="stAppToolbar"] a,
 #MainMenu,
 footer {
     display: none !important;
     visibility: hidden !important;
-    height: 0 !important;
-    width: 0 !important;
     opacity: 0 !important;
     pointer-events: none !important;
 }
@@ -61,26 +61,40 @@ footer {
 header[data-testid="stHeader"] {
     background: transparent !important;
     z-index: 99990 !important;
+    pointer-events: none !important;
 }
 
-/* Tombol Anak Panah Sidebar (Collapsed Control) — Tampak Jelas di HP & Desktop */
+/* Tombol Anak Panah Sidebar (Collapsed Control) — SELALU TAMPIL PROMINEN */
 [data-testid="collapsedControl"] {
     visibility: visible !important;
-    display: block !important;
+    display: flex !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
     z-index: 99999 !important;
+    position: fixed !important;
+    top: 12px !important;
+    left: 12px !important;
 }
+
 [data-testid="collapsedControl"] button {
-    background: rgba(62,39,35,0.85) !important;
+    background: rgba(62,39,35,0.9) !important;
     color: var(--secondary) !important;
-    border: 1px solid rgba(255,215,153,0.3) !important;
-    border-radius: 10px !important;
-    box-shadow: 0 0 16px rgba(254,179,0,0.25) !important;
+    border: 1px solid rgba(255,215,153,0.4) !important;
+    border-radius: 12px !important;
+    width: 40px !important;
+    height: 40px !important;
+    box-shadow: 0 0 18px rgba(254,179,0,0.3) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     transition: all 0.25s ease !important;
 }
+
 [data-testid="collapsedControl"] button:hover {
     background: rgba(62,39,35,1) !important;
     border-color: var(--secondary-dim) !important;
-    transform: scale(1.05);
+    box-shadow: 0 0 24px rgba(254,179,0,0.5) !important;
+    transform: scale(1.06);
 }
 
 /* Custom Scrollbar */
