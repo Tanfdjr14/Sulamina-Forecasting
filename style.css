@@ -44,9 +44,20 @@
     color: var(--on-surf);
 }
 
-/* Sembunyikan menu bawaan & footer, tapi TAMPILKAN Tombol Anak Panah Sidebar Bawaan Streamlit */
-#MainMenu { visibility: hidden; }
-footer { visibility: hidden; }
+/* Sembunyikan Toolbar Streamlit Cloud (Icon GitHub & Menu Kanan Atas) */
+[data-testid="stAppToolbar"],
+.stAppToolbar,
+button[title="View app source"],
+#MainMenu,
+footer {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    width: 0 !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
 header[data-testid="stHeader"] {
     background: transparent !important;
     z-index: 99990 !important;
