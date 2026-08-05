@@ -77,7 +77,7 @@ if not st.session_state.logged_in:
 
 
 # ─────────────────────────────────────────────
-# 5. Top Navigation Bar (Only Logged-In Users)
+# 5. Custom Top Toolbar (Substitution for Default Streamlit Toolbar)
 # ─────────────────────────────────────────────
 def nav_to(page_name):
     st.session_state.page = page_name
@@ -85,19 +85,29 @@ def nav_to(page_name):
 nav_pages = ['Dashboard', 'Analytics', 'Inventory']
 current_page = st.session_state.page
 
-nav_cols = st.columns([2, 6, 3])
+tb_cols = st.columns([2.5, 1.8, 4.5, 2.5])
 
-with nav_cols[0]:
+with tb_cols[0]:
     st.markdown('<div class="brand-text">🍫 Sulamina</div>', unsafe_allow_html=True)
 
-with nav_cols[1]:
+with tb_cols[1]:
+    if st.button("📂 Data Panel", key="btn_panel_toggle", help="Buka/Tutup Panel Upload Data"):
+        st.components.v1.html("""
+            <script>
+                var btn = window.parent.document.querySelector('[data-testid="collapsedControl"] button') ||
+                          window.parent.document.querySelector('[data-testid="stSidebarCollapseButton"] button');
+                if (btn) { btn.click(); }
+            </script>
+        """, height=0)
+
+with tb_cols[2]:
     btn_cols = st.columns(len(nav_pages))
     for i, page in enumerate(nav_pages):
         with btn_cols[i]:
             btn_label = f"▸ {page}" if current_page == page else page
             st.button(btn_label, key=f"nav_{page}", on_click=nav_to, args=(page,), use_container_width=True)
 
-with nav_cols[2]:
+with tb_cols[3]:
     icon_cols = st.columns([1, 2])
     with icon_cols[0]:
         if st.button("🔔", key="btn_notif", help="Notifikasi"):
