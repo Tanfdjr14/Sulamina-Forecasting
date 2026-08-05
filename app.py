@@ -73,16 +73,7 @@ if not st.session_state.logged_in:
                         st.rerun()
                     else:
                         st.error("❌ Email atau password salah! Silakan coba lagi.")
-
-        st.markdown("""
-        <div class="login-demo-box">
-            🔑 <strong>Kredensial Default (NoSQL DB):</strong><br/>
-            • <strong>Email:</strong> <code>snorkelzone@gmail.com</code><br/>
-            • <strong>Pass:</strong> <code>@test112233</code>
-        </div>
-        """, unsafe_allow_html=True)
-
-    st.stop()
+        st.stop()
 
 
 # ─────────────────────────────────────────────
