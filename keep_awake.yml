@@ -1,0 +1,22 @@
+name: Keep Streamlit App Awake
+
+on:
+  schedule:
+    # Berjalan otomatis setiap 12 jam (Format Cron)
+    - cron: '0 */12 * * *'
+  # Memungkinkan Anda untuk menjalankan otomatisasi ini secara manual dari tab Actions
+  workflow_dispatch:
+
+jobs:
+  keep-awake:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Trigger Empty Commit
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "41898282+github-actions[bot]@://github.com"
+        git commit --allow-empty -m "Chore: Keep Streamlit awake"
+        git push
